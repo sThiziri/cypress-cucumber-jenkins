@@ -28,9 +28,8 @@ pipeline {
 
     post {
         always {
-            node{
+            // Directement ici, pas de node
             archiveArtifacts artifacts: 'cypress/screenshots/**, reports/**', allowEmptyArchive: true
-            }
         }
     }
 }
