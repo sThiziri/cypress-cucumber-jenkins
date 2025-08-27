@@ -1,30 +1,34 @@
-pipeline{
-    agent{
-        docker{
+pipeline {
+    agent {
+        docker {
             image 'cypress/browsers:latest'
             args 'entrypoint='
         }
     }
-    stages{
-        stage("installation"){
-            steps{
+
+    stages {
+        stage("Installation") {
+            steps {
                 sh 'npm ci'
             }
         }
-        stage(""){
-            steps{
+
+        stage("Run Cypress Tests") {
+            steps {
                 sh 'npx cypress run'
             }
         }
     }
 
-    post{
-        always{
+    post {
+        always {
             script {
+                // Génération du rapport Cucumber HTML
                 sh 'tools/generate_html_cucumber_report.sh'
+
+                // Archivage des screenshots et rapports
                 archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
             }
         }
     }
-    
 }
