@@ -1,1 +1,1 @@
-node cucumber-html-report.js
+node cucumber-report-generator.js
