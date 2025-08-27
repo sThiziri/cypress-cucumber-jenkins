@@ -22,12 +22,13 @@ pipeline {
 
     post {
         always {
-            node {
-                docker.image('cypress/browsers:latest').inside('--entrypoint=') {
-                    sh 'tools/generate_html_cucumber_report.sh'
-                    archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
-                }
+            script {
+                // Génération du rapport
+                sh 'tools/generate_html_cucumber_report.sh'
+
+                // Archivage des artifacts
+                archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
+            }
         }
-    }
     }
 }
