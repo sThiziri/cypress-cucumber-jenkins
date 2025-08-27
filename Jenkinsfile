@@ -18,12 +18,6 @@ pipeline {
                 sh 'npx cypress run'
             }
         }
-
-        stage("Generate Cucumber Report") {
-            steps {
-                sh 'tools/generate_html_cucumber_report.sh'
-            }
-        }
     }
 
     
