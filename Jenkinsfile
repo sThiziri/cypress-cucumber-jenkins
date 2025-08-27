@@ -20,8 +20,10 @@ pipeline{
 
     post{
         always{
-            sh 'tools/generate_html_cucumber_report.sh'
-            archiveArtifacts 'cypress/screenshots/**, rapports/**'
+            script {
+                sh 'tools/generate_html_cucumber_report.sh'
+                archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
+            }
         }
     }
     
