@@ -22,13 +22,11 @@ pipeline {
 
     post {
         always {
-            script {
-                // Génération du rapport Cucumber HTML
-                sh 'tools/generate_html_cucumber_report.sh'
-
-                // Archivage des screenshots et rapports
-                archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
-            }
+            node {
+                docker.image('cypress/browsers:latest').inside('--entrypoint=') {
+                    sh 'tools/generate_html_cucumber_report.sh'
+                    archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
+                }
         }
     }
 }
