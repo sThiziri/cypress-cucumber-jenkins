@@ -1,25 +1,16 @@
+
+
 const { defineConfig } = require("cypress");
-const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
-const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
-const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+const cucumber = require("cypress-cucumber-preprocessor").default; //a ajouter
 
 module.exports = defineConfig({
+  // reporter: "cypress-mochawesome-reporter",
   e2e: {
-    specPattern: "**/*.feature",
-    supportFile: "cypress/support/e2e.js",
+    specPattern: "cypress/features/**/*.feature", // a ajouter
     chromeWebSecurity: false,
-
-    async setupNodeEvents(on, config) {
-      await addCucumberPreprocessorPlugin(on, config);
-
-      on(
-        "file:preprocessor",
-        createBundler({
-          plugins: [createEsbuildPlugin.default(config)], // ✅ note le .default
-        })
-      );
-
-      return config;
+    setupNodeEvents(on, config) {
+      on("file:preprocessor", cucumber()); // ajouter
+      // require("cypress-mochawesome-reporter/plugin")(on);
     },
   },
 });

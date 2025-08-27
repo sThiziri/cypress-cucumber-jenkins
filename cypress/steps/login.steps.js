@@ -1,32 +1,34 @@
+
 /// <reference types="cypress" />
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor"
+
+import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
+Given('je visite l url {string}', (url) => {
+    cy.visit(url);
+});
+When('je saisis le username {string}', (username) => {
+    cy.get('#user-name').type(username);
+});
 
 
-import LoginPage from "../pages/login.page";
+Then('je suis redirige vers la page d accueil', () => {
+    cy.url().should('include', '/inventory.html');
+});
+Then("un message d'erreur s affiche {string}", (errorMessage) => {
+    cy.get('[data-test="error"]').should('have.text', errorMessage);
+});
 
-
-
-When('je saisis le username {string}', (s) => {
+When('je clique sur le bouton login', () => {
   // Write code here that turns the phrase above into concrete actions
-  LoginPage.saisirUsernam(s)
+  cy.get("#login-button").click();
 })
 
-When('je saisis le password {string}', (s) => {
+When('je saisis le password  {string}', (s) => {
   // Write code here that turns the phrase above into concrete actions
-  LoginPage.saisirPassword(s)
+  cy.get("#password").type(s);
 })
 
-When('je clique sur le bouton Login', () => {
-  // Write code here that turns the phrase above into concrete actions
-  LoginPage.cliqueSurLogin()
-})
 
-Then('j acced a mon dashboard', () => {
-  // Write code here that turns the phrase above into concrete actions
-  expect(0).to.equal(0)
-})
 
-Given('je visite le lien {string}', (s) => {
-  // Write code here that turns the phrase above into concrete actions
-  cy.visit(s, {failOnStatusCode: false})
-})
+
+
+
