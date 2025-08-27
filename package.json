@@ -1,0 +1,38 @@
+{
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "@cucumber/cucumber": "^12.2.0",
+    "@cypress/webpack-preprocessor": "^7.0.1",
+    "@faker-js/faker": "^9.9.0",
+    "cypress": "^14.5.2",
+    "esbuild": "^0.25.8"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/support/step_definitions/**/*.ts",
+    "html": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-html/cucumber-report.html"
+    },
+    "messages": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-ndjson/cucumber-report.ndjson"
+    },
+    "json": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-json/cucumber-report.json"
+    }
+  },
+  "dependencies": {
+    "multiple-cucumber-html-reporter": "^3.9.3"
+  },
+  "name": "template-cypress-cucumber-newest-2025",
+  "version": "1.0.0",
+  "main": "cucumber-html-report.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
