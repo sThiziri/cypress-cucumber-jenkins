@@ -1,20 +1,23 @@
 pipeline {
-    agent {
-        docker {
+    agent{
+        docker{
             image 'cypress/browsers:latest'
-            args 'entrypoint='
+            args '--entrypoint=' 
         }
     }
-
-    stages {
-        stage("Installation") {
+    stages{
+        stage('Node Version') {
             steps {
+                 sh 'node --version'
+            }
+        }
+        stage("installation"){
+            steps{
                 sh 'npm ci'
             }
         }
-
-        stage("Run Cypress Tests") {
-            steps {
+        stage("run tests"){
+            steps{
                 sh 'npx cypress run'
             }
         }
@@ -22,10 +25,10 @@ pipeline {
 
     post {
         always {
-            //sh 'chmod +x tools/generate_html_cucumber_report.sh'
-            sh 'tools/generate_html_cucumber_report.sh'
-            archiveArtifacts 'cypress/reports/**'
-            cucumber 'reports/cucumber-json/*.json'
+            sh 'chmod +x tools/generate_html_cucumber_report.sh'
+            sh './tools/generate_html_cucumber_report.sh'
+            archiveArtifacts 'cypress/reports/**/*.*'
+            cucumber "cypress/reports/cucumber-json/*.json"
         }
     }
 }
