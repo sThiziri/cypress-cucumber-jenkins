@@ -18,17 +18,17 @@ pipeline {
                 sh 'npx cypress run'
             }
         }
+
+        stage("Generate Cucumber Report") {
+            steps {
+                sh 'tools/generate_html_cucumber_report.sh'
+            }
+        }
     }
 
     post {
         always {
-            script {
-                // Génération du rapport
-                sh 'tools/generate_html_cucumber_report.sh'
-
-                // Archivage des artifacts
-                archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
-            }
+            archiveArtifacts artifacts: 'cypress/screenshots/**, rapports/**', allowEmptyArchive: true
         }
     }
 }
